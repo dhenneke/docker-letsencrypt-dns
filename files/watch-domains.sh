@@ -27,7 +27,7 @@ while true; do
 
 	    for domain in $clean_domains; do
 		if [ -z $main_domain ]; then
-		    main_domain=$domain
+		    main_domain=`echo $domain | sed "s/^\*\.//g"`
 		fi
 		domains_cmd="$domains_cmd -d $domain"
 	    done
@@ -69,6 +69,7 @@ while true; do
             remove_domain=true
             while read entry; do
                 for comp_domain in $entry; do
+                  comp_domain=`echo $comp_domain | sed "s/^\*\.//g"`
                     if [ "$domain" = "$comp_domain" ]; then
                         remove_domain=false
                         break;
